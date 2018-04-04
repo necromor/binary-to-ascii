@@ -1,0 +1,35 @@
+body {
+  padding-top: 2em;
+}
+
+h1 {
+  font-size: 160%;
+  text-align: center;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 0.3em;
+  font-weight: bold;
+}
+
+h2 {
+  text-align: center;
+}
+
+.instruction {
+  margin-top: 2em;
+}
+
+.instruction h2 {
+  font-size: 140%;
+  font-weight: bold;
+  text-align: left;
+}
+
+.instruction dl dt {
+  text-decoration: underline;
+}
+
+.instruction dl dd {
+  margin-left: 2em;
+}
+

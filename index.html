@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Converter - binary to ascii and ascii to binary</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="styles.css" type="text/css" media="screen">
+  <script src="scripts.js"></script>
+</head>
+
+<body>
+  <div class="container">
+
+    <header>
+      <div class="row"><!-- header row -->
+        <div class="col-lg-9 offset-lg-1">
+        <h1>Convert binary to ascii or the other way around!</h1>
+        </div>
+      </div><!-- /header row -->
+    </header>
+
+    <section>
+      <div class="row"><!-- main content row -->
+
+        <div class="col-lg-4 offset-lg-1"><!-- left column -->
+          <h2 class="text-primary">Convert binary to ascii</h2>
+          <form>
+            <div class="form-group row">
+              <div class="col-sm">
+                <textarea class="form-control border border-primary" id="text__b2a" name="text__b2a" rows="6"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-8 offset-sm-2">
+                <button type="button" class="btn btn-primary w-100" id="btn__b2a">Convert binary to ascii</button>
+              </div>
+            </div>
+          </form>
+        </div><!-- /left column -->
+
+        <div class="col-lg-4 offset-lg-1"><!-- right column -->
+          <h2 class="text-info">Convert ascii to binary</h2>
+          <form>
+            <div class="form-group row">
+              <div class="col-sm">
+                <textarea class="form-control border border-info" id="text__a2b" name="text__a2b" rows="6"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-8 offset-sm-2">
+                <button type="button" class="btn btn-info w-100" id="btn__a2b">Convert ascii to binary</button>
+              </div>
+            </div>
+          </form>
+        </div><!-- /right column -->
+
+      </div><!-- /main content row -->
+    </section>
+
+    <section class="instruction">
+      <div class="row"><!-- instructions row -->
+        <div class="col-lg-9 offset-lg-1">
+          <h2>How to use the converter:</h2>
+          <dl>
+            <dt>To convert from binary to ascii:</dt>
+            <dd>Paste the binary into the left/upper textarea and click the button below. The result of the convertion will be displayed in right/lower textarea.</dd>
+            <dt>To convert from ascii to binary:</dt>
+            <dd>Paste the ascii into the right/lower textarea and click the button below. The result of the convertion will be displayed in left/upper textarea.</dd>
+          </dl>
+        </div>
+      </div><!-- /instructions row -->
+    </section>
+
+  </div><!-- /container -->
+</body>
+</html>
