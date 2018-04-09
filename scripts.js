@@ -65,7 +65,7 @@ const kvArray = [
 
 const charMap = new Map(kvArray);
 
-let A2BModule, B2AModule;
+let A2BModule, B2AModule, MainModule;
 
 A2BModule = {
   /*
@@ -195,7 +195,48 @@ B2AModule = {
 
 };
 
+MainModule = {
+  /*
+  module responsible for all the UI interactions 
+  */
 
+  DOMel: {
+    text_a2b: document.querySelector('#text__a2b'),
+    text_b2a: document.querySelector('#text__b2a')
+  },
+
+  convertB2A: () => {
+    /*
+    gets the text from text__b2a and converts it to ascii form
+    */
+
+    MainModule.DOMel.text_a2b.value = B2AModule.convertBinaryToAscii(MainModule.DOMel.text_b2a.value);
+  },
+
+  convertA2B: () => {
+    /*
+    gets the text from text__a2b and converts it to binary form
+    */
+
+    MainModule.DOMel.text_b2a.value = A2BModule.convertAsciiToBinary(MainModule.DOMel.text_a2b.value);
+  },
+
+  registerEvents: function() {
+    /*
+    function that registers events on buttons
+    */
+
+    document.querySelector('#btn__b2a').addEventListener('click', MainModule.convertB2A); 
+    document.querySelector('#btn__a2b').addEventListener('click', MainModule.convertA2B); 
+  },
+
+  init: () => {
+    MainModule.registerEvents();
+  }
+
+};
+
+MainModule.init();
 
 if ((typeof module !== 'undefined') && (typeof module.exports !== 'undefined')) {
   module.exports = {
