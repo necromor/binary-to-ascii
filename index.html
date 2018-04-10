@@ -25,6 +25,11 @@
 
         <div class="col-lg-4 offset-lg-1"><!-- left column -->
           <h2 class="text-primary">Convert binary to ascii</h2>
+          <div class="alert alert-primary" role="alert" id="s__b2a">
+            <p>The conversion is done! Original text:</p>
+            <textarea disabled="disabled" id="o__b2a"></textarea>
+          </div>
+          <p class="alert alert-danger" id="e__b2a">Some of the characters could not be converted and were omitted.</p>
           <form>
             <div class="form-group row">
               <div class="col-sm">
@@ -41,6 +46,11 @@
 
         <div class="col-lg-4 offset-lg-1"><!-- right column -->
           <h2 class="text-info">Convert ascii to binary</h2>
+          <div class="alert alert-info" role="alert" id="s__a2b">
+            <p>The conversion is done! Original text:</p>
+            <textarea disabled="disabled" id="o__a2b"></textarea>
+          </div>
+          <p class="alert alert-danger" id="e__a2b">The binary was not correct - contained illegal characters or had not the right amount of 0 and 1.</p>
           <form>
             <div class="form-group row">
               <div class="col-sm">

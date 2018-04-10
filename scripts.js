@@ -87,21 +87,25 @@ A2BModule = {
     consumes a string and returns an array of its all characters without punctuation signs
     returns an empty array if the given string is empty or contains only punctuation signs
     the result array contains only of characters from charMap that have a binary representation
+    the second returned element is a boolean: true if there were some characters that could not be converted
     */
 
     const raw = Array.from(string);
+    let flag = false;
 
     // replace all disallowed characters as undefined
     let result = raw.map( (el) => {
       if (charMap.has(el)) {
         return el;
+      } else {
+        flag = true;
       }
     });
 
     // get rid of undefined elements
     result = result.filter( el => el !== undefined ); 
 
-    return result;
+    return [result, flag];
   },
 
   convertAsciiToBinary: (string) => {
@@ -111,12 +115,12 @@ A2BModule = {
     */
 
     // convert string into an array of elements that have binary representation
-    const elements = A2BModule.splitToIndividualChars(string);
+    const [elements, flag] = A2BModule.splitToIndividualChars(string);
 
     // create an array of binary representation of the elements
     const result = elements.map( el => A2BModule.charToBinary(el) );
 
-    return result.join('');
+    return [result.join(''), flag];
   }
 
 };
@@ -143,6 +147,7 @@ B2AModule = {
     /*
     consumes a string of binaries and returns an arry of individual chars in binary form
     ommits incomplete binaries and signs that are not 0 or 1
+    the second returned element is a boolean: true if there were some characters that could not be converted
     */
  
     const len = binary.length;
@@ -151,6 +156,7 @@ B2AModule = {
 
     let result = [];
     let str = '';
+    let flag = false;
 
     for (let i = 0; i < len; i++) {
       // if current string has exactly 8 chars add it to array
@@ -159,6 +165,8 @@ B2AModule = {
         // check if the binary character is in our charMap
         if (Array.from(charMap.values()).indexOf(str) !== -1) {
           result.push(str);
+        } else {
+          flag = true;
         }
         str = '';
         i--;
@@ -167,6 +175,8 @@ B2AModule = {
         const chr = binary.substr(i,1);
         if ( chr === '0' || chr === '1') {
           str += chr;
+        } else {
+          flag = true;
         }
       }
     }
@@ -176,7 +186,7 @@ B2AModule = {
       result.push(str);
     }
 
-    return result;
+    return [result, flag];
   },
 
   convertBinaryToAscii: (binary) => {
@@ -185,12 +195,16 @@ B2AModule = {
     */
 
     // convert string into an array of binary 
-    const elements = B2AModule.splitToBytes(binary);
+    const [elements, flag] = B2AModule.splitToBytes(binary);
 
-    // create an array of binary representation of the elements
-    const result = elements.map( el => B2AModule.binaryToChar(el) );
-
-    return result.join('');
+    // cannot map if array is empty
+    if (elements !== undefined) {
+      // create an array of binary representation of the elements
+      const result = elements.map( el => B2AModule.binaryToChar(el) );
+      return [result.join(''), flag];
+    } else {
+      return ['', true];
+    }
   }
 
 };
@@ -202,7 +216,13 @@ MainModule = {
 
   DOMel: {
     text_a2b: document.querySelector('#text__a2b'),
-    text_b2a: document.querySelector('#text__b2a')
+    text_b2a: document.querySelector('#text__b2a'),
+    e_b2a: document.querySelector('#e__b2a'),
+    e_a2b: document.querySelector('#e__a2b'),
+    s_a2b: document.querySelector('#s__a2b'),
+    s_b2a: document.querySelector('#s__b2a'),
+    o_a2b: document.querySelector('#o__a2b'),
+    o_b2a: document.querySelector('#o__b2a')
   },
 
   convertB2A: () => {
@@ -210,15 +230,45 @@ MainModule = {
     gets the text from text__b2a and converts it to ascii form
     */
 
-    MainModule.DOMel.text_a2b.value = B2AModule.convertBinaryToAscii(MainModule.DOMel.text_b2a.value);
+    const [ascii, flag] = B2AModule.convertBinaryToAscii(MainModule.DOMel.text_b2a.value);
+
+    MainModule.DOMel.text_a2b.value = ascii;
+
+    // display info about converted text
+    MainModule.DOMel.s_a2b.style.display = 'block';
+    MainModule.DOMel.o_a2b.value = MainModule.DOMel.text_b2a.value;
+    MainModule.DOMel.s_b2a.style.display = 'none';
+    MainModule.DOMel.o_b2a.value = '';
+
+    // display error message if there was one
+    if (flag) {
+      MainModule.DOMel.e_a2b.style.display = 'block';
+    }
+    // hide the other field - needed if there was an error in earlier conversion
+    MainModule.DOMel.e_b2a.style.display = 'none';
   },
 
   convertA2B: () => {
     /*
     gets the text from text__a2b and converts it to binary form
     */
+   
+    const [binary, flag] = A2BModule.convertAsciiToBinary(MainModule.DOMel.text_a2b.value);
 
-    MainModule.DOMel.text_b2a.value = A2BModule.convertAsciiToBinary(MainModule.DOMel.text_a2b.value);
+    MainModule.DOMel.text_b2a.value = binary;
+
+    // display info about converted text
+    MainModule.DOMel.s_b2a.style.display = 'block';
+    MainModule.DOMel.o_b2a.value = MainModule.DOMel.text_a2b.value;
+    MainModule.DOMel.s_a2b.style.display = 'none';
+    MainModule.DOMel.o_a2b.value = '';
+
+    // display error message if there was one
+    if (flag) {
+      MainModule.DOMel.e_b2a.style.display = 'block';
+    }
+    // hide the other field - needed if there was an error in earlier conversion
+    MainModule.DOMel.e_a2b.style.display = 'none';
   },
 
   registerEvents: function() {
@@ -232,6 +282,12 @@ MainModule = {
 
   init: () => {
     MainModule.registerEvents();
+    //hide info 
+    MainModule.DOMel.s_b2a.style.display = 'none';
+    MainModule.DOMel.s_a2b.style.display = 'none';
+    //hide errors
+    MainModule.DOMel.e_b2a.style.display = 'none';
+    MainModule.DOMel.e_a2b.style.display = 'none';
   }
 
 };
